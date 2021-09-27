@@ -6,7 +6,7 @@
 /*
 Ceci est la fonction main permettant de tester l'implementation
  des structure Etudiant et GroupeEtudiant
-L'auteur de ce mini programme est Okono Mehitang Wilfried Loïc
+L'auteur de ce mini programme est Okono Mehitang Wilfried LoÃ¯c
 */
 int main()
 {

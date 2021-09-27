@@ -3,24 +3,30 @@
 #include <stdlib.h>
 #include <string.h>
 
-//D�claration des variable globale
-int compteurEtudiant = 0;//variable contenant le nombre d'�tudiant pr�sent dans le groupe
+//Déclaration des variable globale
+int compteurEtudiant = 0;//variable contenant le nombre d'etudiant présent dans le groupe
 GroupeEtudiant G;
 
-//Impl�mentation du sous-programme nombreFille
+//Implémentation du sous-programme nombreFille
 int nombreFille(){
-    int compteur = 0;//compteur initialis� � 0.
+    int compteur = 0;//compteur initialisé à 0.
     for(int i = 0; i<compteurEtudiant; i++){ //la boucle for pour parcourire le groupe
-        if(strcmp(G[i].sexe,"F")==0)//si le sexe de l'�tudiant est f�minin
-            compteur++; //Le compteur est incr�ment� � chaque le if est v�rifi�
+        if(strcmp(G[i].sexe,"F")==0)//si le sexe de l'étudiant est féminin
+            compteur++; //Le compteur est incrémenté à chaque le if est vérifié
     }
     return compteur;
 }
 
-//Impl�mentation du sous-programme ageMoyenne
+//Implémentation du sous-programme nombreGarçon
+int nombreGarçon(){
+    int compteur = compteurEtudiant - nombreFille();
+    return compteur;
+}
+
+//Implémentation du sous-programme ageMoyenne
 int ageMoyen(){
-    int moyenne; //d�claration de la variable qui va contenir la moyenne
-    int sommeAge = 0;//la variable interm�diare qui contiendra la somme d'�ge.
+    int moyenne; //déclaration de la variable qui va contenir la moyenne
+    int sommeAge = 0;//la variable intermédiare qui contiendra la somme d'âge.
     for(int i = 0; i<compteurEtudiant; i++){
         sommeAge+=(2021-G[i].dateDeNaissance.annee);
     }
@@ -31,22 +37,22 @@ int ageMoyen(){
     return moyenne;
 }
 
-//Impl�mentation du sous-programme rechercheEtudiant
-int rechercheEtudiant(char* matriculeEtu){//Fonction pr�dicat
+//Implémentation du sous-programme rechercheEtudiant
+int rechercheEtudiant(char* matriculeEtu){//Fonction prédicat
     int i = 0;
     int verification = 0;
     while((i<compteurEtudiant) && strcmp(G[i].matricule, matriculeEtu)!=0)
         /*Ici la condiction pour sortir de la boucle while est que:
         Soit on trouve le matricule
-        soit on parcourt tout le groupe d'�tudiant
+        soit on parcourt tout le groupe d'étudiant
         */
         i+=1;
-    if(i < compteurEtudiant)//si est �gale � la taille du
+    if(i < compteurEtudiant)//si est égale à la taille du groupe d'étudiant
         verification = 1;
     return verification;
 }
 
-//Impl�mentation du sous-programme afficheEudiant
+//Implémentation du sous-programme afficheEudiant
 void afficheEtudiant(Etudiant etu){
     printf("\n---------------------------------------------------------------------------------------------\n");
     printf("Nom : %s\t Prenom : %s\t Date de naissance : %d-%d-%d\t Sexe : %s\n",
@@ -59,49 +65,59 @@ void afficheGroupeEtudiant(){
     printf("Voici les membres du groupe d'etudiant\n");
     for(int i = 0; i<compteurEtudiant; i++)
     {
-        afficheEtudiant(G[i]);//Appel de la fonction pour afficher un �tudiant
+        afficheEtudiant(G[i]);//Appel de la fonction pour afficher un étudiant
     }
 }
 
-//Impl�mentation du sous-programme addNewStudent celle-ci permet de cr�er un nouveau etudiant
+//Implémentation du sous-programme addNewStudent celle-ci permet de créer un nouveau etudiant
 //Et de l'ajouter dans le groupe
 void addNewStudent(){
-    Etudiant newStudent;
-    printf("Entrez son nom : ");
-    scanf("%s", newStudent.nom);
-    printf("Entrez son prenom : ");
-    scanf("%s", newStudent.prenom);
-    printf("Entrez son jour de naissance : ");
-    scanf("%d", &newStudent.dateDeNaissance.jour);
-    printf("Entrez son mois de naissance : ");
-    scanf("%d", &newStudent.dateDeNaissance.mois);
-    printf("Entrez son annee de naissance : ");
-    scanf("%d", &newStudent.dateDeNaissance.annee);
-    printf("Entrez son sexe (M ou F) : ");
-    scanf("%s", newStudent.sexe);
-    printf("Entrez son matricule : ");
-    scanf("%s", newStudent.matricule);
-    printf("Entrez son parcourt-types : ");
-    scanf("%s", newStudent.parcourtTypes);
-    printf("Entrez son niveau : ");
-    scanf("%d", &newStudent.niveau);
-    G[compteurEtudiant]=newStudent;//ajout d'un etudiant dans le groupe d'�tudiant
-    compteurEtudiant++;//incr�mentation du nombre d'�tudiant pr�sent dans le groupe apr�s l'ajout
+    printf("Combien d'étudiant voulez vous ajouter au groupe?  ");
+    int nEtudiant;
+    scanf("%d", &nEtudiant);
+    for (int i = 0; i < nEtudiant; i++)
+    {
+        printf("\nEntrez les informations de l'étudiant %d\n", nEtudiant);
+        Etudiant newStudent;
+        printf("Entrez son nom : ");
+        scanf("%s", newStudent.nom);
+        printf("Entrez son prenom : ");
+        scanf("%s", newStudent.prenom);
+        printf("Entrez son jour de naissance : ");
+        scanf("%d", &newStudent.dateDeNaissance.jour);
+        printf("Entrez son mois de naissance : ");
+        scanf("%d", &newStudent.dateDeNaissance.mois);
+        printf("Entrez son annee de naissance : ");
+        scanf("%d", &newStudent.dateDeNaissance.annee);
+        printf("Entrez son sexe (M ou F) : ");
+        scanf("%s", newStudent.sexe);
+        printf("Entrez son matricule : ");
+        scanf("%s", newStudent.matricule);
+        printf("Entrez son parcourt-types : ");
+        scanf("%s", newStudent.parcourtTypes);
+        printf("Entrez son niveau : ");
+        scanf("%d", &newStudent.niveau);
+        G[compteurEtudiant]=newStudent;//ajout d'un etudiant dans le groupe d'étudiant
+        compteurEtudiant++;//incrémentation du nombre d'étudiant présent dans le groupe après l'ajout
+    }
+    
+    
 }
 
-//Impl�mentation du programme menu
+//Implémentation du programme menu
 void menu(){
     char option[3]="NON";
     while(strcmp(option, "OUI")!=0 && strcmp(option, "oui")!=0 )
-        //while pour rep�ter le menu tant que l'utilisateur n'entre pas OUI ou oui au moment indiquer
+        //while pour repéter le menu tant que l'utilisateur n'entre pas OUI ou oui au moment indiquer
     {
         int choixMenu;
         printf("\n\n  ==================  Menu ==================\n\n");
-        printf("1 - Ajouter un nouveau etudiant au groupe.\n");
+        printf("1 - Ajouter des etudiant dans le groupe.\n");
         printf("2 - Determiner le nombre de fiile dans le groupe.\n");
-        printf("3 - Rechercher un etudiant.\n");
-        printf("4 - Determiner l'age moyenne du groupe.\n");
-        printf("5 - Afficher les membres du groupe.\n");
+        printf("3 - Determiner le nombre de Garçon dans le groupe.\n");
+        printf("4 - Rechercher un etudiant.\n");
+        printf("5 - Determiner l'age moyenne du groupe.\n");
+        printf("6 - Afficher les membres du groupe.\n");
         printf("Entrez votre choix ?  ");
         scanf("%d", &choixMenu);
         printf("\n");

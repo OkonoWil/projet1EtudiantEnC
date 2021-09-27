@@ -2,16 +2,16 @@
 #define ETUDIANT_H_INCLUDED
 #include <stdio.h>
 #include <string.h>
-#define TAILLE 100//DÈclaration de la constante TAILLE : la taille du tableau groupeEtudiant
+#define TAILLE 100//D√©claration de la constante TAILLE : la taille du tableau groupeEtudiant
 
-//DÈclaration du type structurÈ Date
+//D√©claration du type structur√© Date
 typedef struct {
     unsigned int jour;
     unsigned int mois;
     unsigned int annee;
 }Date;
 
-//DÈclaration du type structurÈ Etudiant
+//D√©claration du type structur√© Etudiant
 typedef struct {
     char nom[25];
     char prenom[25];
@@ -22,25 +22,28 @@ typedef struct {
     Date dateDeNaissance;
 }Etudiant;
 
-//DÈclaration du type structurÈ GroupeEtudiant
+//D√©claration du type structur√© GroupeEtudiant
 typedef Etudiant GroupeEtudiant[TAILLE];
 
-//Prototype du Sous-programme qui dÈtermine le nombre de filles du groupe
+//Prototype du Sous-programme qui d√©termine le nombre de filles du groupe
 int nombreFille();
 
-//Prototype du Sous-programme qui dÈtermine l'‚ge moyen du groupe
+//Prototype du Sous-programme qui d√©termine le nombre de gar√ßons du groupe
+int nombreGar√ßon();
+
+//Prototype du Sous-programme qui d√©termine l'√¢ge moyen du groupe
 int ageMoyen();
 
-//Prototype du Sous-programme qui recherche si un Ètudiant de matricule M donnÈ est prÈsent
+//Prototype du Sous-programme qui recherche si un √©tudiant de matricule M donn√© est pr√©sent
 int rechercheEtudiant(char* matriculeEtu);
 
-//Prototype du sous-programme d'affichage permettant d'afficher un Ètudiant
+//Prototype du sous-programme d'affichage permettant d'afficher un √©tudiant
 void afficheEtudiant(Etudiant etu);
 
-//Prototype du sous-programme d'affichage permettant d'afficher le groupe d'Ètudiant
+//Prototype du sous-programme d'affichage permettant d'afficher le groupe d'√©tudiant
 void afficheGroupeEtudiant();
 
-//Prototype du sous-programme permettant de crÈer un nouveau Ètudiant et de l'ajouter dans le groupe
+//Prototype du sous-programme permettant de cr√©er un nouveau √©tudiant et de l'ajouter dans le groupe
 void addNewStudent();
 
 //Prototype du sous-programme permettant de faire interagi le programme avec un utilisateur.
