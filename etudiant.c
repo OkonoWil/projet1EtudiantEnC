@@ -18,7 +18,7 @@ int nombreFille(){
 }
 
 //Implémentation du sous-programme nombreGarçon
-int nombreGarçon(){
+int nombreGarcon(){
     int compteur = compteurEtudiant - nombreFille();
     return compteur;
 }
@@ -55,14 +55,14 @@ int rechercheEtudiant(char* matriculeEtu){//Fonction prédicat
 //Implémentation du sous-programme afficheEudiant
 void afficheEtudiant(Etudiant etu){
     printf("\n---------------------------------------------------------------------------------------------\n");
-    printf("Nom : %s\t Prenom : %s\t Date de naissance : %d-%d-%d\t Sexe : %s\n",
+    printf("Nom : %s\t Prenom : %s\t Date et lieu de naissance : %d-%d-%d a %s\n",
             etu.nom, etu.prenom, etu.dateDeNaissance.jour, etu.dateDeNaissance.mois,
-             etu.dateDeNaissance.annee, etu.sexe);
-    printf("Matricule : %s\t Parcourt-Types : %s\t Niveau : %d \n", etu.matricule,
-            etu.parcourtTypes, etu.niveau);
+             etu.dateDeNaissance.annee, etu.lieu);
+    printf("Matricule : %s\t Parcourt-Types : %s\t Niveau : %d\t Sexe : %s \n", etu.matricule,
+            etu.parcourtTypes, etu.niveau, etu.sexe);
 }
 void afficheGroupeEtudiant(){
-    printf("Voici les membres du groupe d'etudiant\n");
+    printf("Voici les %d membres du groupe d'etudiant\n", compteurEtudiant);
     for(int i = 0; i<compteurEtudiant; i++)
     {
         afficheEtudiant(G[i]);//Appel de la fonction pour afficher un étudiant
@@ -72,12 +72,12 @@ void afficheGroupeEtudiant(){
 //Implémentation du sous-programme addNewStudent celle-ci permet de créer un nouveau etudiant
 //Et de l'ajouter dans le groupe
 void addNewStudent(){
-    printf("Combien d'étudiant voulez vous ajouter au groupe?  ");
+    printf("Combien d'etudiant voulez vous ajouter au groupe?  ");
     int nEtudiant;
     scanf("%d", &nEtudiant);
     for (int i = 0; i < nEtudiant; i++)
     {
-        printf("\nEntrez les informations de l'étudiant %d\n", nEtudiant);
+        printf("\nEntrez les informations de l'etudiant %d\n", i+1);
         Etudiant newStudent;
         printf("Entrez son nom : ");
         scanf("%s", newStudent.nom);
@@ -89,6 +89,8 @@ void addNewStudent(){
         scanf("%d", &newStudent.dateDeNaissance.mois);
         printf("Entrez son annee de naissance : ");
         scanf("%d", &newStudent.dateDeNaissance.annee);
+         printf("Entrez son lieu de naissance : ");
+        scanf("%s", newStudent.lieu);
         printf("Entrez son sexe (M ou F) : ");
         scanf("%s", newStudent.sexe);
         printf("Entrez son matricule : ");
@@ -114,7 +116,7 @@ void menu(){
         printf("\n\n  ==================  Menu ==================\n\n");
         printf("1 - Ajouter des etudiant dans le groupe.\n");
         printf("2 - Determiner le nombre de fiile dans le groupe.\n");
-        printf("3 - Determiner le nombre de Garçon dans le groupe.\n");
+        printf("3 - Determiner le nombre de Garcon dans le groupe.\n");
         printf("4 - Rechercher un etudiant.\n");
         printf("5 - Determiner l'age moyenne du groupe.\n");
         printf("6 - Afficher les membres du groupe.\n");
@@ -135,6 +137,11 @@ void menu(){
                 scanf("%s", option);
                 break;
             case 3:
+                printf("Dans le groupe d'etudiant il y'a : %d Garcon(s)\n", nombreGarcon());
+               printf("\nVoulez vous quitter (OUI ou NON) ? ");
+                scanf("%s", option);
+                break;
+            case 4:
                 printf("Entrez le matricule de l'etudiant que vous rechercher :");
                 char matEtudiant[8];
                 scanf("%s", matEtudiant);
@@ -145,12 +152,12 @@ void menu(){
                printf("\nVoulez vous quitter (OUI ou NON) ? ");
                 scanf("%s", option);
                 break;
-            case 4:
+            case 5:
                 printf("Dans le groupe d'etudiant la moyenne d'age est : %d an(s)\n\n", ageMoyen());
                 printf("\nVoulez vous quitter (OUI ou NON) ? ");
                 scanf("%s", option);
                 break;
-            case 5:
+            case 6:
                 afficheGroupeEtudiant();
                 printf("\nVoulez vous quitter (OUI ou NON) ? ");
                 scanf("%s", option);

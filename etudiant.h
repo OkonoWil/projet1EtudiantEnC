@@ -17,6 +17,7 @@ typedef struct {
     char prenom[25];
     char parcourtTypes[25];
     char matricule[10];
+    char lieu[25];
     unsigned int niveau;
     char sexe[10];
     Date dateDeNaissance;
@@ -29,7 +30,7 @@ typedef Etudiant GroupeEtudiant[TAILLE];
 int nombreFille();
 
 //Prototype du Sous-programme qui détermine le nombre de garçons du groupe
-int nombreGarçon();
+int nombreGarcon();
 
 //Prototype du Sous-programme qui détermine l'âge moyen du groupe
 int ageMoyen();
