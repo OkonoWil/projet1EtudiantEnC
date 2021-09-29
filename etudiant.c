@@ -106,10 +106,15 @@ void addNewStudent(){
     
 }
 
+void decision(char *opt){
+    printf("\nVoulez vous quitter (OUI ou NON) ? ");
+    scanf("%s", opt);
+}
+
 //Implémentation du programme menu
 void menu(){
-    char option[3]="NON";
-    while(strcmp(option, "OUI")!=0 && strcmp(option, "oui")!=0 )
+    char *option;
+    do
         //while pour repéter le menu tant que l'utilisateur n'entre pas OUI ou oui au moment indiquer
     {
         int choixMenu;
@@ -128,18 +133,15 @@ void menu(){
         {
             case 1:
                 addNewStudent();
-                printf("\nVoulez vous quitter (OUI ou NON) ? ");
-                scanf("%s", option);
+                decision(option);
                 break;
             case 2:
                 printf("Dans le groupe d'etudiant il y'a : %d fille(s)\n", nombreFille());
-               printf("\nVoulez vous quitter (OUI ou NON) ? ");
-                scanf("%s", option);
+                decision(option);
                 break;
             case 3:
                 printf("Dans le groupe d'etudiant il y'a : %d Garcon(s)\n", nombreGarcon());
-               printf("\nVoulez vous quitter (OUI ou NON) ? ");
-                scanf("%s", option);
+                decision(option);
                 break;
             case 4:
                 printf("Entrez le matricule de l'etudiant que vous rechercher :");
@@ -149,24 +151,20 @@ void menu(){
                 if(rechercheEtudiant(matEtudiant)==1)//pour afficher OUI ou NON comme resultat de la recherche
                     deci="OUI";
                 printf("L'etudiant de matricule %s est-il present : %s\n", matEtudiant, deci);
-               printf("\nVoulez vous quitter (OUI ou NON) ? ");
-                scanf("%s", option);
+                decision(option);
                 break;
             case 5:
                 printf("Dans le groupe d'etudiant la moyenne d'age est : %d an(s)\n\n", ageMoyen());
-                printf("\nVoulez vous quitter (OUI ou NON) ? ");
-                scanf("%s", option);
+                decision(option);
                 break;
             case 6:
                 afficheGroupeEtudiant();
-                printf("\nVoulez vous quitter (OUI ou NON) ? ");
-                scanf("%s", option);
+                decision(option);
                 break;
             default:
-                printf("\nVoulez vous quitter (OUI ou NON) ? ");
-                scanf("%s", option);
+                decision(option);
                 break;
 
         }
-    }
+    }while(strcmp(option, "OUI")!=0 && strcmp(option, "oui")!=0 );
 }
