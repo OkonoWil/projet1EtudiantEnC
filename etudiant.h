@@ -50,6 +50,6 @@ void addNewStudent();
 //Prototype du sous-programme permettant de faire interagi le programme avec un utilisateur.
 void menu();
 
-void decision(char *opt);
+void decision(char *pointeurOpt);
 
 #endif // ETUDIANT_H_INCLUDED

@@ -106,17 +106,15 @@ void addNewStudent(){
     
 }
 
-void decision(char *opt){
-    printf("\nVoulez vous quitter (OUI ou NON) ? ");
-    scanf("%s", opt);
+void decision(char *pointeurOpt){
+    printf("\nVoulez vous quitter ('O' pour OUI ou 'N' pour NON) ? \n");
+    scanf("%s", pointeurOpt);
 }
 
 //Implémentation du programme menu
 void menu(){
-    char *option;
-    do
-        //while pour repéter le menu tant que l'utilisateur n'entre pas OUI ou oui au moment indiquer
-    {
+    char option[3] = "NON";
+    while((strcmp(option, "OUI") !=0) && (strcmp(option, "oui") !=0)){  //while pour repéter le menu tant que l'utilisateur n'entre pas OUI ou oui au moment indiquer
         int choixMenu;
         printf("\n\n  ==================  Menu ==================\n\n");
         printf("1 - Ajouter des etudiant dans le groupe.\n");
@@ -163,8 +161,10 @@ void menu(){
                 break;
             default:
                 decision(option);
+                printf("%s", option);
                 break;
 
         }
-    }while(strcmp(option, "OUI")!=0 && strcmp(option, "oui")!=0 );
+    }
+   
 }
