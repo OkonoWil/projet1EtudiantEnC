@@ -161,7 +161,6 @@ void menu(){
                 break;
             default:
                 decision(option);
-                printf("%s", option);
                 break;
 
         }
