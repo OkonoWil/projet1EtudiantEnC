@@ -51,5 +51,6 @@ void addNewStudent();
 void menu();
 
 void decision(char *pointeurOpt);
+void decision2(char *pointeurOpt);
 
 #endif // ETUDIANT_H_INCLUDED

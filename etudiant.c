@@ -107,7 +107,11 @@ void addNewStudent(){
 }
 
 void decision(char *pointeurOpt){
-    printf("\nVoulez vous quitter ('O' pour OUI ou 'N' pour NON) ? \n");
+    printf("\nVoulez vous quitter ( 'OUI' ou 'NON' ) ?  \t");
+    scanf("%s", pointeurOpt);
+}
+void decision2(char *pointeurOpt){
+    printf("\nVoulez vous vraiment quitter le mini-programme ( 'OUI' ou 'NON' ) ?  \t");
     scanf("%s", pointeurOpt);
 }
 
@@ -123,7 +127,8 @@ void menu(){
         printf("4 - Rechercher un etudiant.\n");
         printf("5 - Determiner l'age moyenne du groupe.\n");
         printf("6 - Afficher les membres du groupe.\n");
-        printf("Entrez votre choix ?  ");
+        printf("7 - Quitter le programme.\n ");
+        printf("Entrez votre choix ?  \t");
         scanf("%d", &choixMenu);
         printf("\n");
 
@@ -159,11 +164,16 @@ void menu(){
                 afficheGroupeEtudiant();
                 decision(option);
                 break;
+            case 7:
+                decision2(option);
+                break;
             default:
                 decision(option);
                 break;
 
         }
     }
-   
+    
+    printf("\nMerci d'avoir utiliser notre mini-programme. :)\n");
+    printf("\n  =========================  Arret =========================\n\n");
 }

@@ -12,5 +12,6 @@ int main()
 {
     printf("____________________BIENVENU____________________ \n");
     menu(); //L'appel de cette fonction lancera le menu
+    printf("____________________________Au revoir_____________________________ \n\n");
     return 0;
 }
