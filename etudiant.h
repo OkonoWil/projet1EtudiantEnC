@@ -30,10 +30,10 @@ int nombreFille();
 int nombreGarcon();
 
 //Prototype du Sous-programme qui détermine l'âge moyen du groupe
-int ageMoyen(int nbrEtudiant);
+int ageMoyen();
 
 //Prototype du Sous-programme qui recherche si un étudiant de matricule M donné est présent
-int rechercheEtudiant(char* matriculeEtu,  int nbrEtudiant);
+int rechercheEtudiant(char* matriculeEtu);
 
 //Prototype du sous-programme d'affichage permettant d'afficher un étudiant
 void afficheEtudiant(Etudiant etu);
@@ -49,6 +49,6 @@ void decision2(char *pointeurOpt);
 
 void saveStudent(Etudiant etud);
 
-void readFileStudent();
+int nombreEtudiant();
 
 #endif // ETUDIANT_H_INCLUDED
