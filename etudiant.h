@@ -7,7 +7,7 @@
 //Déclaration du type structuré Date
 typedef struct {
     unsigned int jour;
-    unsigned int mois;
+    char mois[15];
     unsigned int annee;
 }Date;
 
@@ -23,9 +23,6 @@ typedef struct {
     Date dateDeNaissance;
 }Etudiant;
 
-//Déclaration du type structuré GroupeEtudiant
-typedef Etudiant GroupeEtudiant[TAILLE];
-
 //Prototype du Sous-programme qui détermine le nombre de filles du groupe
 int nombreFille();
 
@@ -33,16 +30,13 @@ int nombreFille();
 int nombreGarcon();
 
 //Prototype du Sous-programme qui détermine l'âge moyen du groupe
-int ageMoyen();
+int ageMoyen(int nbrEtudiant);
 
 //Prototype du Sous-programme qui recherche si un étudiant de matricule M donné est présent
-int rechercheEtudiant(char* matriculeEtu);
+int rechercheEtudiant(char* matriculeEtu,  int nbrEtudiant);
 
 //Prototype du sous-programme d'affichage permettant d'afficher un étudiant
 void afficheEtudiant(Etudiant etu);
-
-//Prototype du sous-programme d'affichage permettant d'afficher le groupe d'étudiant
-void afficheGroupeEtudiant();
 
 //Prototype du sous-programme permettant de créer un nouveau étudiant et de l'ajouter dans le groupe
 void addNewStudent();
@@ -52,5 +46,9 @@ void menu();
 
 void decision(char *pointeurOpt);
 void decision2(char *pointeurOpt);
+
+void saveStudent(Etudiant etud);
+
+void readFileStudent();
 
 #endif // ETUDIANT_H_INCLUDED

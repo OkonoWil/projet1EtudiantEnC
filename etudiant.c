@@ -2,70 +2,105 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-//Déclaration des variable globale
-int compteurEtudiant = 0;//variable contenant le nombre d'etudiant présent dans le groupe
-GroupeEtudiant G;
+#define TAILLE_NOM 25
 
 //Implémentation du sous-programme nombreFille
 int nombreFille(){
-    int compteur = 0;//compteur initialisé à 0.
-    for(int i = 0; i<compteurEtudiant; i++){ //la boucle for pour parcourire le groupe
-        if(strcmp(G[i].sexe,"F")==0)//si le sexe de l'étudiant est féminin
-            compteur++; //Le compteur est incrémenté à chaque le if est vérifié
+    int compteur=0;
+    FILE *fichier = NULL;
+    fichier = fopen("SaveDir.sav", "r+");
+    if(fichier != NULL){
+        Etudiant etud;
+       while(!feof(fichier) ){
+            fscanf(fichier,"%s %s %d %s %d %s %s %s %d %s", etud.nom, etud.prenom, &etud.dateDeNaissance.jour, etud.dateDeNaissance.mois, &etud.dateDeNaissance.annee, etud.lieu, etud.matricule, etud.parcourtTypes, &etud.niveau, etud.sexe);
+            if(strcmp(etud.sexe,"F")==0 || strcmp(etud.sexe,"f")==0)//si le sexe de l'étudiant est féminin
+                compteur++; //Le compteur est incrémenté à chaque le if est vérifié
+        }
+        fclose(fichier);
     }
     return compteur;
 }
 
 //Implémentation du sous-programme nombreGarçon
 int nombreGarcon(){
-    int compteur = compteurEtudiant - nombreFille();
-    return compteur;
+    int compteurEtudiant=0;
+    FILE *fichier = NULL;
+    fichier = fopen("SaveDir.sav", "r+");
+    if(fichier != NULL){
+        Etudiant etud;
+        while(!feof(fichier) ){
+            fscanf(fichier,"%s %s %d %s %d %s %s %s %d %s", etud.nom, etud.prenom, &etud.dateDeNaissance.jour, etud.dateDeNaissance.mois, &etud.dateDeNaissance.annee, etud.lieu, etud.matricule, etud.parcourtTypes, &etud.niveau, etud.sexe);
+            if(strcmp(etud.sexe,"M")==0 || strcmp(etud.sexe,"m")==0)//si le sexe de l'étudiant est féminin
+                compteurEtudiant++; //Le compteur est incrémenté à chaque le if est vérifié
+        }
+        fclose(fichier);
+    }
+    int compteur2 = compteurEtudiant - nombreFille();
+    return compteur2;
 }
 
 //Implémentation du sous-programme ageMoyenne
-int ageMoyen(){
+int ageMoyen(int nbrEtudiant){
     int moyenne; //déclaration de la variable qui va contenir la moyenne
     int sommeAge = 0;//la variable intermédiare qui contiendra la somme d'âge.
-    for(int i = 0; i<compteurEtudiant; i++){
-        sommeAge+=(2021-G[i].dateDeNaissance.annee);
+    FILE *fichier = NULL;
+    fichier = fopen("SaveDir.sav", "r+");
+    if(fichier != NULL){
+        Etudiant etud;
+        while(!feof(fichier) ){
+            fscanf(fichier,"%s %s %d %s %d %s %s %s %d %s", etud.nom, etud.prenom, &etud.dateDeNaissance.jour, etud.dateDeNaissance.mois, &etud.dateDeNaissance.annee, etud.lieu, etud.matricule, etud.parcourtTypes, &etud.niveau, etud.sexe);
+            sommeAge+=(2021-etud.dateDeNaissance.annee);
+        }
+        fclose(fichier);
     }
-    if(compteurEtudiant==0)//Teste si la taille du tableau est vide
-        moyenne=0;//dans ce cas de figure la moyenne est nul
-    else
-        moyenne=sommeAge/compteurEtudiant;
+    moyenne=sommeAge/nbrEtudiant;
     return moyenne;
 }
 
 //Implémentation du sous-programme rechercheEtudiant
-int rechercheEtudiant(char* matriculeEtu){//Fonction prédicat
+int rechercheEtudiant(char* matriculeEtu, int nbrEtudiant){//Fonction
+    FILE *fichier = NULL;
     int i = 0;
     int verification = 0;
-    while((i<compteurEtudiant) && strcmp(G[i].matricule, matriculeEtu)!=0)
-        /*Ici la condiction pour sortir de la boucle while est que:
-        Soit on trouve le matricule
-        soit on parcourt tout le groupe d'étudiant
-        */
-        i+=1;
-    if(i < compteurEtudiant)//si est égale à la taille du groupe d'étudiant
-        verification = 1;
+    fichier = fopen("SaveDir.sav", "r+");
+    if(fichier != NULL){
+        Etudiant etud;
+        while(!feof(fichier) ){
+            fscanf(fichier,"%s %s %d %s %d %s %s %s %d %s", etud.nom, etud.prenom, &etud.dateDeNaissance.jour, etud.dateDeNaissance.mois, &etud.dateDeNaissance.annee, etud.lieu, etud.matricule, etud.parcourtTypes, &etud.niveau, etud.sexe);
+            if(strcmp(etud.matricule, matriculeEtu)!=0)
+                /*  Ici la condiction pour sortir de la boucle while est que:
+                    Soit on trouve le matricule
+                    soit on parcourt tout le groupe d'étudiant
+                */
+                i+=1;
+            }
+        fclose(fichier);
+        if(i < nbrEtudiant)//si est égale à la taille du groupe d'étudiant
+            verification = 1;
+    }
     return verification;
 }
 
 //Implémentation du sous-programme afficheEudiant
 void afficheEtudiant(Etudiant etu){
     printf("\n---------------------------------------------------------------------------------------------\n");
-    printf("Nom : %s\t Prenom : %s\t Date et lieu de naissance : %d-%d-%d a %s\n",
+    printf("Nom : %s\t Prenom : %s\t Date et lieu de naissance : %d %s %d a %s\n",
             etu.nom, etu.prenom, etu.dateDeNaissance.jour, etu.dateDeNaissance.mois,
              etu.dateDeNaissance.annee, etu.lieu);
     printf("Matricule : %s\t Parcourt-Types : %s\t Niveau : %d\t Sexe : %s \n", etu.matricule,
             etu.parcourtTypes, etu.niveau, etu.sexe);
 }
-void afficheGroupeEtudiant(){
-    printf("Voici les %d membres du groupe d'etudiant\n", compteurEtudiant);
-    for(int i = 0; i<compteurEtudiant; i++)
-    {
-        afficheEtudiant(G[i]);//Appel de la fonction pour afficher un étudiant
+void afficheGroupeEtudiant(int compteurEtudiant){
+    FILE *fichier = NULL;
+    fichier = fopen("SaveDir.sav", "r+");
+    if(fichier != NULL){
+        printf("Voici les %d membres du groupe d'etudiant\n", compteurEtudiant);
+        Etudiant etud;
+        while(!feof(fichier) ){
+            fscanf(fichier,"%s %s %d %s %d %s %s %s %d %s", etud.nom, etud.prenom, &etud.dateDeNaissance.jour, etud.dateDeNaissance.mois, &etud.dateDeNaissance.annee, etud.lieu, etud.matricule, etud.parcourtTypes, &etud.niveau, etud.sexe);
+            afficheEtudiant(etud);
+        }
+        fclose(fichier);
     }
 }
 
@@ -86,7 +121,7 @@ void addNewStudent(){
         printf("Entrez son jour de naissance : ");
         scanf("%d", &newStudent.dateDeNaissance.jour);
         printf("Entrez son mois de naissance : ");
-        scanf("%d", &newStudent.dateDeNaissance.mois);
+        scanf("%s", newStudent.dateDeNaissance.mois);
         printf("Entrez son annee de naissance : ");
         scanf("%d", &newStudent.dateDeNaissance.annee);
          printf("Entrez son lieu de naissance : ");
@@ -99,11 +134,10 @@ void addNewStudent(){
         scanf("%s", newStudent.parcourtTypes);
         printf("Entrez son niveau : ");
         scanf("%d", &newStudent.niveau);
-        G[compteurEtudiant]=newStudent;//ajout d'un etudiant dans le groupe d'étudiant
-        compteurEtudiant++;//incrémentation du nombre d'étudiant présent dans le groupe après l'ajout
+        saveStudent(newStudent); //Nous enregistrons ainsi les données du nouveau étudiant dans notre fichier.
     }
-    
-    
+
+
 }
 
 void decision(char *pointeurOpt){
@@ -118,6 +152,7 @@ void decision2(char *pointeurOpt){
 //Implémentation du programme menu
 void menu(){
     char option[3] = "NON";
+    int nbr;
     while((strcmp(option, "OUI") !=0) && (strcmp(option, "oui") !=0)){  //while pour repéter le menu tant que l'utilisateur n'entre pas OUI ou oui au moment indiquer
         int choixMenu;
         printf("\n\n  ==================  Menu ==================\n\n");
@@ -150,18 +185,24 @@ void menu(){
                 printf("Entrez le matricule de l'etudiant que vous rechercher :");
                 char matEtudiant[8];
                 scanf("%s", matEtudiant);
+                printf("Entrez le nombre d'etudiant : ");
+                scanf("%d", &nbr);
                 char* deci="NON";
-                if(rechercheEtudiant(matEtudiant)==1)//pour afficher OUI ou NON comme resultat de la recherche
+                if(rechercheEtudiant(matEtudiant, nbr)==1)//pour afficher OUI ou NON comme resultat de la recherche
                     deci="OUI";
                 printf("L'etudiant de matricule %s est-il present : %s\n", matEtudiant, deci);
                 decision(option);
                 break;
             case 5:
-                printf("Dans le groupe d'etudiant la moyenne d'age est : %d an(s)\n\n", ageMoyen());
+                printf("Entrez le nombre d'etudiant : ");
+                scanf("%d", &nbr);
+                printf("Dans le groupe d'etudiant la moyenne d'age est : %d an(s)\n\n", ageMoyen(nbr));
                 decision(option);
                 break;
             case 6:
-                afficheGroupeEtudiant();
+                printf("Entrez le nombre d'etudiant : ");
+                scanf("%d", &nbr);
+                afficheGroupeEtudiant(nbr);
                 decision(option);
                 break;
             case 7:
@@ -173,7 +214,29 @@ void menu(){
 
         }
     }
-    
+
     printf("\nMerci d'avoir utiliser notre mini-programme. :)\n");
     printf("\n  =========================  Arret =========================\n\n");
 }
+
+void saveStudent(Etudiant etud){
+    FILE *fichier = NULL;
+    fichier = fopen("SaveDir.sav", "a");
+    if(fichier != NULL){
+        fprintf(fichier,"%s\n%s %d %s %d %s %s %s %d %s\n",etud.nom, etud.prenom, etud.dateDeNaissance.jour, etud.dateDeNaissance.mois, etud.dateDeNaissance.annee, etud.lieu, etud.matricule, etud.parcourtTypes, etud.niveau, etud.sexe);
+        fclose(fichier);
+    }
+}
+
+void readFileStudent(){
+    FILE *fichier = NULL;
+    fichier = fopen("SaveDir.sav", "r");
+    if(fichier != NULL){
+        Etudiant etud;
+       while(!feof(fichier) ){
+            fscanf(fichier,"%s %s %d %s %d %s %s %s %d %s", etud.nom, etud.prenom, &etud.dateDeNaissance.jour, etud.dateDeNaissance.mois, &etud.dateDeNaissance.annee, etud.lieu, etud.matricule, etud.parcourtTypes, &etud.niveau, etud.sexe);
+        }
+        fclose(fichier);
+    }
+}
+
